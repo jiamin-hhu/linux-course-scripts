@@ -1,0 +1,37 @@
+#!/bin/bash
+
+read CODE < /home/jiamin/bin/code
+path="/home/IAmHere"
+echo "Hi, welcome to Happy Linux!"
+echo "You want to tell Mr. Lu you are here, right?"
+
+if [ "$CODE" == "" ]; then
+   echo "I am afraid it is not the right moment, try next time."
+   echo "Bye bye. ^_^ Have a good day" 
+   exit 0
+fi
+
+echo -n "I can help you, if you please give me the code: " 
+read code
+echo -e ".............................................\n\n"
+
+if [ "$code" == "$CODE" ]; then
+  filename="$(date "+%Y%m%d%H%M")_${USER}"
+  filename=$path/$filename
+  if [ -f $filename ]; then
+    echo "Easy, mate, you have already checked in."
+  else 
+    SOURCE_IP=${SSH_CLIENT%% *}
+    echo "${USER} ${SOURCE_IP} ${CODE}" > $filename
+    chmod 000 $filename 
+  fi
+  echo -e "OK, you are recorded, enjoy the day!"
+  echo -e "\n............................................."
+  exit 0
+else
+  echo "Sorry, you are not here!"
+  echo "Enjoy the sleep!"
+  echo -e "\n............................................."
+  exit -1
+fi
+exit 0
