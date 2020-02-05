@@ -3,6 +3,7 @@
 ##################################################
 ## !!!! Must use cat -A to check whether the id list 
 ## contains invisible characthers, like ^M
+## We can use :set fileformat=unix command to remove them in vi. 
 ##################################################
 
 
@@ -23,6 +24,7 @@ count=0
 
 for id in $(cat $listpath); do
   un=$id 
+
   # Indicate the user's group, shell, and create its home directory
   sudo useradd -d /home/$un -m -g students -s /bin/bash $un
 
