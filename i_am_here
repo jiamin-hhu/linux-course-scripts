@@ -1,6 +1,16 @@
 #!/bin/bash
 
-read CODE < /home/jiamin/bin/code
+bin=`readlink -f "$0"`
+bin=`dirname "$bin"`
+bin=`cd "$bin"; pwd`
+
+CODEFILE=$bin/code
+if [ -f $CODEFILE ]; then
+  read CODE < $CODEFILE 
+else
+  CODE=""
+fi
+
 path="/home/IAmHere"
 echo "Hi, welcome to Happy Linux!"
 echo "You want to tell Mr. Lu you are here, right?"
