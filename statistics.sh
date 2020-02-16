@@ -7,7 +7,7 @@ declare -i numOfArgs=$#
 let numOfArgs++
 
 LIST=FALSE
-TOPN=1
+TOPN=10
 
 while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 
@@ -29,8 +29,6 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 		PARA=${OPTARG/[0-9]*/}
 		if [ "$PARA" == "" ]; then 
 		  TOPN=$OPTARG
-		else
-		  TOPN=1
 		fi
 		;;
   esac
@@ -45,5 +43,5 @@ fi
 
 if [ ! -z $TOPN ]; then
   echo -en "\nThe top $TOPN students who logged most are: \n" 
-  last -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -n | tail -n ${TOPN} | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/names
+  last -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -nr | head -n ${TOPN} | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/names
 fi
