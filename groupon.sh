@@ -38,7 +38,7 @@ let numOfArgs++
 
 while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 
-  getopts "hc:a:d:e:t:f:" optKey
+  getopts "hc:a:d:e:t:f:p" optKey
   if [ "$optKey" == "?" ]; then
     optKey="h"
   fi
@@ -52,6 +52,7 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 	   echo -en " -d GROUP_ID:STUDENT_ID \nDelete a member from a group. \n\n"
 	   echo -en " -t GROUP_ID \nlisT all members in the group. \n\n"
 	   echo -en " -f STUDENT_ID \nFind the group where the given student is enlisted. \n\n"
+	   echo -en " -p \nPrint the statistics of grouped students. \n\n "
 	   exit 0;;
 	c)
 		STUDENT_ID="${OPTARG}"
@@ -185,6 +186,13 @@ fi
 # Find where the student is
 if [ "$optKey" == "f" ]; then
 	grep "$STUDENT_ID " $GROUPFILE
+fi
+
+# Print the statistics of the grouped students
+if [ "$optKey" == "p" ]; then
+	NUM_GROUPS=`cat $GROUPFILE | grep -v "^$" | wc -l`
+	NUM_GROUPED=`cat $GROUPFILE | awk '{print $2,$3,$4,$5,$6}' | tr ' ' '\n' | grep -v "^$" | wc -l`
+	echo "So far there are $NUM_GROUPS groups, and in total $NUM_GROUPED students are grouped."
 fi
 
 exit 0
