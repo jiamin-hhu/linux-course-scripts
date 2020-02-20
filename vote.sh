@@ -43,10 +43,23 @@ TOPICS=( '5 大 Unix/Linux 谣言粉碎机'
 	)
 
 printAllTopics() {
+	# Get the selection statistics about the topics
+	RES=($(cut -d' ' -f2 data/selection.txt | sort -n | uniq -c | awk '{print $2 ":" $1}' | tr '\n' ' '))
+
 	echo "所有可选选题包括：" >&2
 	declare -i num=1
 	for topic in "${TOPICS[@]}"; do
-		echo -e "$num\t$topic" >&2
+		declare -i left=5
+		for selection in "${RES[@]}"; do
+			topic_id=$num
+			if [ "${selection%%:*}" -eq "$topic_id" ]; then
+				used=${selection##*:}
+				left=$((left - used))
+				break
+			fi
+		done
+
+		echo -e "$num\t($left)\t$topic $left" >&2
 		let num++
 	done
 }
@@ -85,7 +98,7 @@ let numOfArgs++
 
 while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 
-  getopts "hs:c:d:t:" optKey
+  getopts "hs:c:d:t:p" optKey
   if [ "$optKey" == "?" ]; then
     optKey="h"
   fi
@@ -97,6 +110,7 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 	   echo -en " -c GROUP_ID:TOPIC_ID \nChange a topic. \n\n"
 	   echo -en " -d GROUP_ID \nDelete a selection. \n\n"
 	   echo -en " -t GROUP_ID \nlisT a selection. \n\n"
+	   echo -en " -p \nPrint available topics. \n\n"
 	   $(printAllTopics)
 	   exit 0;;
 	s)
@@ -229,6 +243,10 @@ if [ "$optKey" == "t" ]; then
 	matchline=$(grep "^$GROUP_ID " $TOPICFILE)
 	declare -i selected=${matchline#* }
 	echo "For group $GROUP_ID, the selected topic id is $(printOneTopic $selected)"
+fi
+
+if [ "$optKey" == "p" ]; then
+	$(printAllTopics)
 fi
 
 exit 0
