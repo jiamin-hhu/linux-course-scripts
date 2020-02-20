@@ -44,7 +44,7 @@ TOPICS=( '5 大 Unix/Linux 谣言粉碎机'
 
 printAllTopics() {
 	# Get the selection statistics about the topics
-	RES=($(cut -d' ' -f2 data/selection.txt | sort -n | uniq -c | awk '{print $2 ":" $1}' | tr '\n' ' '))
+	RES=($(cut -d' ' -f2 $TOPICFILE | sort -n | uniq -c | awk '{print $2 ":" $1}' | tr '\n' ' '))
 
 	echo "所有可选选题包括：" >&2
 	declare -i num=1
