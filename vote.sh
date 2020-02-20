@@ -59,7 +59,7 @@ printAllTopics() {
 			fi
 		done
 
-		echo -e "$num\t($left)\t$topic $left" >&2
+		echo -e "$num\t($left)\t$topic " >&2
 		let num++
 	done
 }
