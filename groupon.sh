@@ -192,7 +192,7 @@ fi
 if [ "$optKey" == "p" ]; then
 	NUM_GROUPS=`cat $GROUPFILE | grep -v "^$" | wc -l`
 	NUM_GROUPED=`cat $GROUPFILE | awk '{print $2,$3,$4,$5,$6}' | tr ' ' '\n' | grep -v "^$" | wc -l`
-	echo "So far there are $NUM_GROUPS groups, and in total $NUM_GROUPED students are grouped."
+	echo -en "\nSo far there are $NUM_GROUPED students set in total $NUM_GROUPS groups.\n\n"
 fi
 
 exit 0
