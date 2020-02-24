@@ -54,5 +54,5 @@ fi
 
 if [ "$ONLE" == "TRUE" ]; then
   echo -en "\nThe students who are online now are: \n"
-  who -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -nr | head -n ${TOPN} | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/names
+  who -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -nr | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/names
 fi
