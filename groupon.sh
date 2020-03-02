@@ -38,7 +38,7 @@ let numOfArgs++
 
 while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 
-  getopts "hc:a:d:e:t:f:p" optKey
+  getopts "hc:a:d:e:t:f:p:l" optKey
   if [ "$optKey" == "?" ]; then
     optKey="h"
   fi
@@ -53,6 +53,7 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 	   echo -en " -t GROUP_ID \nlisT all members in the group. \n\n"
 	   echo -en " -f STUDENT_ID \nFind the group where the given student is enlisted. \n\n"
 	   echo -en " -p \nPrint the statistics of grouped students. \n\n "
+	   echo -en " -l \nList each student with its group id. \n\n "
 	   exit 0;;
 	c)
 		STUDENT_ID="${OPTARG}"
@@ -193,6 +194,23 @@ if [ "$optKey" == "p" ]; then
 	NUM_GROUPS=`cat $GROUPFILE | grep -v "^$" | wc -l`
 	NUM_GROUPED=`cat $GROUPFILE | awk '{print $2,$3,$4,$5,$6}' | tr ' ' '\n' | grep -v "^$" | wc -l`
 	echo -en "\nSo far there are $NUM_GROUPED students set in total $NUM_GROUPS groups.\n\n"
+fi
+
+# List each student with his/her group id
+if [ "$optKey" == "l" ]; then
+	cat $GROUPFILE | while read line
+	do
+	  if [ "$line" != "" ]; then
+	    gid=${line%% *}
+	    students=(${line#*${gid}})
+	    if [ ${#students[@]} -eq 0 ]; then
+	      continue
+            fi
+	    for s in "${students[@]}"; do
+		echo "$gid : $s"
+	    done
+	  fi
+	done
 fi
 
 exit 0
