@@ -53,6 +53,7 @@ if [ ! -z $TOPN -a "$LIST" == "TRUE" ]; then
 fi
 
 if [ "$ONLE" == "TRUE" ]; then
-  echo -en "\nThe students who are online now are: \n"
+  NUM=$(who -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq | wc -l)
+  echo -en "In total $NUM students are online now: \n"
   who -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -nr | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/names
 fi
