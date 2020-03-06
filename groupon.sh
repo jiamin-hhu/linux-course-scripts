@@ -38,7 +38,7 @@ let numOfArgs++
 
 while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 
-  getopts "hc:a:d:e:t:f:p:l" optKey
+  getopts "hc:a:d:e:t:f:pl" optKey
   if [ "$optKey" == "?" ]; then
     optKey="h"
   fi
