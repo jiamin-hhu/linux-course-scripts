@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#bin=`readlink -f "$0"`
-#bin=`dirname "$bin"`
-bin=`dirname "$0"`
+bin=`readlink -f "$0"`
+bin=`dirname "$bin"`
+#bin=`dirname "$0"`
 bin=`cd "$bin"; pwd`
 
 #SCOREFILE=$bin/data/scores.txt
-SCOREFILE=$bin/data/Final_scores
+SCOREFILE=$bin/Final_scores
 USERID=${USER}
 
 declare -i numOfArgs=$#
