@@ -6,7 +6,7 @@ bin=`dirname "$bin"`
 bin=`cd "$bin"; pwd`
 
 #SCOREFILE=$bin/data/scores.txt
-SCOREFILE=$bin/Final_scores
+SCOREFILE=$bin/data/Final_scores
 USERID=${USER}
 
 declare -i numOfArgs=$#
