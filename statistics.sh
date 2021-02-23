@@ -49,11 +49,11 @@ fi
 
 if [ ! -z $TOPN -a "$LIST" == "TRUE" ]; then
   echo -en "\nThe top $TOPN students who logged most are: \n" 
-  last -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -nr | head -n ${TOPN} | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/names
+  last -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -nr | head -n ${TOPN} | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/data/names
 fi
 
 if [ "$ONLE" == "TRUE" ]; then
   NUM=$(who -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq | wc -l)
   echo -en "In total $NUM students are online now: \n"
-  who -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -nr | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/names
+  who -w | cut -d' ' -f1 | grep "^[0-9]" | sort | uniq -c | sort -nr | awk -F' ' '{print $2}' | xargs -I {} grep {} ${bin}/data/names
 fi

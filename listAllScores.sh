@@ -1,6 +1,6 @@
 #/bin/bash
 
-cat ./names| while read line 
+cat ./data/names| while read line 
 do
   val=($line)
   id=${val[0]}

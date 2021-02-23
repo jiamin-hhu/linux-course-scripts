@@ -5,7 +5,7 @@ bin=`dirname "$bin"`
 bin=`cd "$bin"; pwd`
 
 GROUPFILE=$bin/data/groups.txt
-STUDENTFILE=$bin/student_ids.txt
+STUDENTFILE=$bin/data/student_ids.txt
 
 validateArguments() {
 	gid=$1
