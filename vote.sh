@@ -7,6 +7,8 @@ bin=`cd "$bin"; pwd`
 GROUPFILE=$bin/data/groups.txt
 TOPICFILE=$bin/data/selection.txt
 
+MAXTIME=7
+
 validateArguments() {
 	gid=$1
 	tid=$2
@@ -30,15 +32,15 @@ validateArguments() {
 	fi
 }
 
-TOPICS=( '5 大 Unix/Linux 谣言粉碎机' 
-	'使用 Windows 能够带来的 5 大软件开发优势' 
-	'本次新冠疫情中采用的 5 种大数据分析方法' 
- 	'寻找 IT 工作时，最需要掌握的 5 大技能' 
-	'远程教学 / 办公时值得推荐的 5 项数码装备' 
-	'我最习惯的 1 门编程语言' 
-	'我最顺手的 1 套软件开发环境' 
-	'我最推荐的 1 本计算机类专业书籍' 
-	'我最常去的 1 个技术学习和讨论平台' 
+TOPICS=( 'Linux 的 5 大入门门槛'
+	'面向软件开发的 Windows 5大优点'
+	'我被 Linux 改变的 5 个软件设计理念'
+ 	'信息专业的研究生学习最需要掌握的 5 大技能'
+	'大数据 / AI 算法开发最需要掌握的 5 大技能'
+	'互联网开发最需要掌握的 5 大技能'
+	'IT 运维最需要掌握的 5 大技能'
+	'996 之外，我们应该如何磨砺专业技能'
+	'如何经营我的专业朋友圈'
 	'自选命题'
 	)
 
@@ -49,7 +51,7 @@ printAllTopics() {
 	echo "所有可选选题包括：" >&2
 	declare -i num=1
 	for topic in "${TOPICS[@]}"; do
-		declare -i left=5
+		declare -i left=${MAXTIME}
 		for selection in "${RES[@]}"; do
 			topic_id=$num
 			if [ "${selection%%:*}" -eq "$topic_id" ]; then
@@ -72,10 +74,10 @@ printOneTopic() {
 validateSelection() {
 	tid=$1
 
-	#Each topic cannot be selected for more than 5 times
+	#Each topic cannot be selected for more than $MAXTIME times
 	match=($(grep " ${tid}$" $TOPICFILE | cut -d' ' -f2))
-	if [ ${#match[*]} -ge 5 ]; then
-		echo "The indicated topic $tid has already been selected more than 5 times." >&2
+	if [ ${#match[*]} -ge $MAXTIME ]; then
+		echo "The indicated topic $tid has already been selected more than ${MAXTIME} times." >&2
 		return 1
 	fi
 }
