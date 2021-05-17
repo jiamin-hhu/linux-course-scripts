@@ -7,7 +7,7 @@ bin=`cd "$bin"; pwd`
 GROUPFILE=$bin/data/groups.txt
 TOPICFILE=$bin/data/selection.txt
 
-MAXTIME=7
+MAXTIME=8
 
 validateArguments() {
 	gid=$1
