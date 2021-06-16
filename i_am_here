@@ -4,7 +4,7 @@ bin=`readlink -f "$0"`
 bin=`dirname "$bin"`
 bin=`cd "$bin"; pwd`
 
-CODEFILE=$bin/code
+CODEFILE=$bin/data/code
 if [ -f $CODEFILE ]; then
   read CODE < $CODEFILE 
 else
