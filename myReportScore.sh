@@ -8,13 +8,14 @@ bin=`cd "$bin"; pwd`
 #SCOREFILE=$bin/data/scores.txt
 SCOREFILE=$bin/data/Final_scores
 USERID=${USER}
+PNUM=0
 
 declare -i numOfArgs=$#
 let numOfArgs++
 
 while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 
-  getopts "th:s:" optKey
+  getopts "th:s:p:" optKey
   if [ "$optKey" == "?" ]; then
     optKey="h"
   fi
@@ -24,6 +25,7 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 	   echo -en " -h Print this message and exit. \n\n"
 	   echo -en " -t lisT ${USER}'s report score. \n\n"
 	   echo -en " -s Search score while the user is jiamin only. \n\n"
+	   echo -en " -p Print the top N students' scores. \n\n"
 	   exit 0;;
 	s) USERID="${OPTARG}"
 	   if [ ${USER} != "jiamin" ]; then
@@ -31,12 +33,23 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 	     exit 2
 	   fi
 	   ;;
+	p) if [ ${USER} != "jiamin" ]; then
+	     echo -en "You are not the super user!\n\n"
+	     exit 2
+	   fi
+           PNUM="${OPTARG}" 
+	   ;;
   esac
 done
 
 TITLES=(`head -n 1 "${SCOREFILE}"`)
 FNUM=${#TITLES[*]}
 SCORELINE=(`grep ${USERID} "${SCOREFILE}"`)
+
+if [ $PNUM -gt 0 ]; then
+	cat ${SCOREFILE} | awk 'NR>2' | sort -k${FNUM} -r | head -n ${PNUM} | cat -n 
+	exit 0
+fi
 
 if [ ${#SCORELINE[*]} == 0 ]; then
 	echo "There is no such user."
