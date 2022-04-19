@@ -7,7 +7,7 @@ bin=`cd "$bin"; pwd`
 GROUPFILE=$bin/data/groups.txt
 TOPICFILE=$bin/data/selection.txt
 
-MAXTIME=8
+MAXTIME=5
 
 validateArguments() {
 	gid=$1
@@ -32,13 +32,13 @@ validateArguments() {
 	fi
 }
 
-TOPICS=( 'Linux 的 5 大入门门槛'
-	'面向软件开发的 Windows 5大优点'
-	'我被 Linux 改变的 5 个软件设计理念'
- 	'信息专业的研究生学习最需要掌握的 5 大技能'
-	'大数据 / AI 算法开发最需要掌握的 5 大技能'
-	'互联网开发最需要掌握的 5 大技能'
-	'IT 运维最需要掌握的 5 大技能'
+TOPICS=( '如何参与 Linux 社区'
+	'如何参与 openEuler 社区'
+	'如何参与 ** 技术社区'
+ 	'如何利用 Linux 搭建 ** 的学习平台'
+	'如何利用 云服务 优化我的生活/学习/工作'
+	'如何利用 大数据 观察世界'
+	'如何为梦想职业作技术储备 （计算机类）'
 	'996 之外，我们应该如何磨砺专业技能'
 	'如何经营我的专业朋友圈'
 	'自选命题'

@@ -152,8 +152,8 @@ if [ "$optKey" == "a" ]; then
 
 	matchline=$(grep "^$GROUP_ID " $GROUPFILE)
 	members=(${matchline#* })
-	if [ ${#members[*]} -ge 4 ]; then
-		echo "A group can has maximum 4 members."
+	if [ ${#members[*]} -ge 5 ]; then
+		echo "A group can has maximum 5 members."
 		exit 1
 	fi
 
