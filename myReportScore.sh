@@ -7,15 +7,26 @@ bin=`cd "$bin"; pwd`
 
 #SCOREFILE=$bin/data/scores.txt
 SCOREFILE=$bin/data/Final_scores
+PAPERLIST=$bin/data/paperList
 USERID=${USER}
 PNUM=0
+
+
+listMyPaperState() {
+  if [ -z $(grep ${USER} $PAPERLIST) ]; then 
+    echo "Where is your paper? I can't see it" 
+  else
+    echo "Your paper is received" 
+  fi 
+}
+
 
 declare -i numOfArgs=$#
 let numOfArgs++
 
 while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 
-  getopts "th:s:p:" optKey
+  getopts "th:s:p:c" optKey
   if [ "$optKey" == "?" ]; then
     optKey="h"
   fi
@@ -24,6 +35,7 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
   	h) echo -en "\nUsuage of ${0##*/}:\n\n"
 	   echo -en " -h Print this message and exit. \n\n"
 	   echo -en " -t lisT ${USER}'s report score. \n\n"
+	   echo -en " -c Check ${USER}'s paper list. \n\n"
 	   echo -en " -s Search score while the user is jiamin only. \n\n"
 	   echo -en " -p Print the top N students' scores. \n\n"
 	   exit 0;;
@@ -33,6 +45,9 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
 	     exit 2
 	   fi
 	   ;;
+	c) listMyPaperState
+ 	     exit 0
+	   ;; 
 	p) if [ ${USER} != "jiamin" ]; then
 	     echo -en "You are not the super user!\n\n"
 	     exit 2
