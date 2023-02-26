@@ -46,20 +46,28 @@ TOPICS=( '如何参与 Linux 社区'
 
 printAllTopics() {
 	# Get the selection statistics about the topics
-	RES=($(cut -d' ' -f2 $TOPICFILE | sort -n | uniq -c | awk '{print $2 ":" $1}' | tr '\n' ' '))
+	SELECTED="true"	
+	if [ ! -s $TOPICFILE ]; then
+	  # countdown only if there is already selection made.
+ 	  # echo "the $TOPICFILE is not empty"  >&2
+	  RES=($(cut -d' ' -f2 $TOPICFILE | sort -n | uniq -c | awk '{print $2 ":" $1}' | tr '\n' ' '))
+	  SELECTED="false"
+	fi
 
 	echo "所有可选选题包括：" >&2
 	declare -i num=1
 	for topic in "${TOPICS[@]}"; do
 		declare -i left=${MAXTIME}
-		for selection in "${RES[@]}"; do
-			topic_id=$num
-			if [ "${selection%%:*}" -eq "$topic_id" ]; then
-				used=${selection##*:}
-				left=$((left - used))
-				break
-			fi
-		done
+		if [ "$SELECTED" == "true" ]; then
+  		  for selection in "${RES[@]}"; do
+  			topic_id=$num
+  			if [ "${selection%%:*}" -eq "$topic_id" ]; then
+  				used=${selection##*:}
+  				left=$((left - used))
+  				break
+  			fi
+		  done
+		fi
 
 		echo -e "$num\t($left)\t$topic " >&2
 		let num++
