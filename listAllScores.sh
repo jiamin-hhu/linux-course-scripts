@@ -8,6 +8,6 @@ do
   echo "------------------------------------"
   echo "$name "
   ./myReportScore.sh -s $id | sed -n '2p'
-  ./myReportScore.sh -s $id | sed -n '15p'
+  ./myReportScore.sh -s $id | sed -n '12p'
   echo "------------------------------------"
 done
