@@ -1,5 +1,4 @@
 #!/bin/bash
-
 bin=`readlink -f "$0"`
 bin=`dirname "$bin"`
 bin=`cd "$bin"; pwd`
@@ -12,4 +11,12 @@ fi
 
 LNUM=$(wc -l $NAMEFILE | cut -d' ' -f1)
 
-sed -n "$(( ${RANDOM} % ${LNUM} ))p" $NAMEFILE
+
+for i in {1..20}; do
+  winner=$(sed -n "$(( ${RANDOM} % ${LNUM} ))p" $NAMEFILE 2>/dev/null)
+  winner=$(echo $winner | cut -d' ' -f2) 
+  printf "\r"
+  printf "the winner is: %s\r" $winner
+  sleep 0.2
+done
+echo 
