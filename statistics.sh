@@ -21,7 +21,7 @@ while [ $# -eq 0 -o $numOfArgs -ne $OPTIND ]; do
   	h) echo -en "\nUsuage of ${0##*/}:\n\n"
 	   echo -en " -h Print this message and exit. \n\n"
 	   echo -en " -n Print the Number of the logged users. \n\n"
-	   echo -en " -t Print the name of the Top N users who have logged most. \n\n"
+	   echo -en " -t:N Print the name of the Top N users who have logged most. \n\n"
 	   echo -en " -o Print the students who are online. \n\n"
 	   exit 0;;
 	n)
